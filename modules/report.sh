@@ -1,6 +1,7 @@
 function makeReport {
 	set -e
 
+	echo "ESCLAVO: report begin"
 	rawfolder=$1
 	qcfolder=$2
 	taxfolder=$3
@@ -20,5 +21,6 @@ function makeReport {
 
 	#rm -f report.R report.Rmd 
 	rm -f report.aux report.dvi report.toc report.out
+	echo "ESCLAVO: report end"
 
 }
