@@ -5,15 +5,15 @@ function statusa {
 	echo "ESCLAVO: Read status after QC begin"
 	FORCE=$1
 	
-	if [ -d 1-qc ];then
-		cd 1-qc
+	if [ -d 2-decont ];then
+		cd 2-decont
 		nfiles=$(ls -1 *${PATTERN} | wc -l | awk '{print $1}' )
 		if [ $((nfiles)) -eq 0 ];then
-			echo "ESCLAVO: No filtered reads found using the pattern '$PATTERN' in the folder 1-qc."
+			echo "ESCLAVO: No filtered reads found using the pattern '$PATTERN' in the folder 2-decont."
 			exit
 		fi
 	else
-		echo "ESCLAVO: 1-qc doesn't exist, maybe the pipeline bypass the QC step? (from: $(pwd))"
+		echo "ESCLAVO: 2-decont doesn't exist, maybe the pipeline bypass the QC step? (from: $(pwd))"
 		exit
 	fi
 	if [ $FORCE ];then

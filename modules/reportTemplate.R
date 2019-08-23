@@ -26,7 +26,7 @@ reportParams[["proyectname"]]<-"PNAME"
 
 ############################## 1-qc
 reportParams[["qcreport"]]<-"MULTIQCHTML"
-qctable<-read.table("PFOLDER/1-qc/qc_summary.tsv",sep = "\t",header = T)
+qctable<-read.table("PFOLDER/DECONTFOLDER/decont_summary.tsv",sep = "\t",header = T)
 qctable$Sample<-rownames(qctable)
 rownames(qctable)<-1:nrow(qctable)
 qctable<-qctable[,c(ncol(qctable),1:(ncol(qctable)-1))]

@@ -110,7 +110,7 @@ do
 	   ;;
 	   "humanDecont")
 		  source $ESCLAVOHOME/modules/humanDecont.sh
-		  #humanDecont
+		  humanDecont 1-qc
 	   ;;
 	   "qc")
 		  source $ESCLAVOHOME/modules/qc.sh
@@ -122,11 +122,11 @@ do
 	   ;;
 	   "assignTaxonomy")
 		  source $ESCLAVOHOME/modules/assignTaxonomy.sh
-		  assignTaxonomy 2-taxInsight
+		  assignTaxonomy 3-taxInsight
 	   ;;
 	   "report")
 		  source $ESCLAVOHOME/modules/report.sh
-		  makeReport 0-raw 1-qc 2-taxInsight
+		  makeReport 0-raw 2-decont 3-taxInsight
 	   ;;
 	   *)
 		  echo "Module $mod not recognized"

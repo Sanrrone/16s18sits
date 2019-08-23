@@ -5,7 +5,7 @@ function assignTaxonomy {
     #dada2:::makeSpeciesFasta_Silva("~/Desktop/Silva/SILVA_132_SSURef_tax_silva.fasta.gz", "~/tax/silva_species_assignment_v132.fa.gz")
 	
 	if [ "$1" == "" ];then
-		WORKFOLDER="2-taxInsight"
+		WORKFOLDER="3-taxInsight"
 	else
     	WORKFOLDER=$1
     fi
@@ -14,7 +14,7 @@ function assignTaxonomy {
     	mkdir "$WORKFOLDER"
     fi
 
-    cd 2-taxInsight
+    cd $WORKFOLDER
 
     nfiles=$(ls -1 $FASTQFOLDER/*${PATTERN} |wc -l |awk '{print $1}')
 	echo "timeElapsed" > tmp0
@@ -39,7 +39,7 @@ function assignTaxonomy {
 	library(Biostrings)
 	library(ggplot2)
 	
-	load('$PROJECTFOLDER/1-qc/seqtab.nochim.RData')
+	load('$PROJECTFOLDER/2-decont/seqtab.nochim.RData')
 	dna <- DNAStringSet(getSequences(seqtab.nochim)) # Create a DNAStringSet from the ASVs
 	print('Doing assigment')
 	taxa <- assignTaxonomy(seqtab.nochim, '$ESCLAVOHOME/DB/silva_nr_v132_train_set.fa.gz', multithread=TRUE, verbose = T)

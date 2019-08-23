@@ -53,46 +53,6 @@ function qc {
 	              compress=TRUE, multithread=TRUE)
 	print('Done')
 	write.table(out,'qc_filt.tsv',sep='\t')
-	print('learning from errors')
-	errF <- learnErrors(filtFs, multithread=TRUE)
-	errR <- learnErrors(filtRs, multithread=TRUE)
-	print('Done')
-	write.table(errF,'dada2_filt_errF.tsv',sep='\t')
-	write.table(errR,'dada2_filt_errR.tsv',sep='\t') 
-
-	print('Dereplication')
-	derepFs <- derepFastq(filtFs, verbose=TRUE)
-	derepRs <- derepFastq(filtRs, verbose=TRUE)
-	print('Done')
-
-	print('Inferring sample composition')
-	dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
-	dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
-	print('done')
-	
-	print('Finally merge reads')
-	mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)	
-	seqtab <- makeSequenceTable(mergers)
-	print('Done')
-
-	#seqtab2 <- seqtab[,nchar(colnames(seqtab)) %in% seq(250,256)]) # to select specific seq length
-	seqtab.nochim <- removeBimeraDenovo(seqtab, method='consensus', multithread=TRUE, verbose=TRUE)
-	print(paste0('sequences kept after removing chimera step: ',sum(seqtab.nochim)/sum(seqtab)))
-
-	#make summary table
-	getN <- function(x) sum(getUniques(x))
-	if(length(fnFs)==1){
-	  dadaFs<-list(dadaFs)
-	  dadaRs<-list(dadaRs)
-	  mergers<-list(mergers)
-	}
-	track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim))
-	# If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
-	colnames(track) <- c('input', 'filtered', 'denoisedF', 'denoisedR', 'merged', 'nonchim')
-	rownames(track) <- sample.names
-
-	write.table(track,'qc_summary.tsv', sep='\t')
-	save(seqtab.nochim,file = 'seqtab.nochim.RData')
 
 	" > dada2_filt.R
 	SECONDS=0
@@ -113,7 +73,6 @@ function qc {
 		sed -i "s/pPercent.*/pPercent\t50/g" $PCONF
 		sed -i "s/lastStep.*/lastStep\tQC/g" $PCONF
 	fi
-
 
 	echo "ESCLAVO: QC end"
 }
