@@ -34,7 +34,7 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    -pt|--fastqpattern)
+    -fp|--fastqpattern)
     PATTERN="$2"
     shift # past argument
     shift # past value
