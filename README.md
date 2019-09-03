@@ -13,8 +13,8 @@ The pipeline have a **basic** usage (only with three parameters):
 `example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz`
 
 and the **complete** usage:
-`bash 16s18sits.sh -p [project folder] -f [fastq foder] -pt [fastq pattern]`
-`example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz`
+`bash 16s18sits.sh -p [project folder] -f [fastq foder] -pt [fastq pattern] -to [tolerance] - -module [steps to run] -force`
+`example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz -to 0.1 -module all -force`
 
 options available:
 
@@ -23,7 +23,8 @@ options available:
 * -pt: fastq pattern, it could be '.fastq' or '.fastq.gz'.
 * -to: read Tolerance for errors (default 0.1 in a range of 0 to 1). It means you tolerate a maximum of 10% of errors in your reads (QC < 20)
 * -force: overwrite existing pipeline runs.
-* 
+* -module: **[experimental]** choose which step do you want to run, choose between: statusb qc humanDecont statusa assignTaxonomy report (default: all)
 * -h: print this help.
+* --debug: show all code step while the pipeline runs
 
 more complete readme soon
