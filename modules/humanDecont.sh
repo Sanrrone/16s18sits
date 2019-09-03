@@ -22,14 +22,14 @@ function humanDecont {
 	cd 2-decont
 
 	if [ ! -f "$ESCLAVOHOME/DB/humanDB.1.cf" ];then
+		actualpath=$(pwd)
+		cd $ESCLAVOHOME/DB
 		echo "No humanDB found, donwloading..."
 		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1QZUKHj040nFSU69ojBTU2uOhb2MYNIOa' -O humanDB.1.cf
-		mv humanDB.1.cf $ESCLAVOHOME/DB/.
 		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1fA-0CyIULPSWKryru0q14bqyWr7z1MnE' -O humanDB.2.cf
-		mv humanDB.2.cf $ESCLAVOHOME/DB/.
 		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1OksPc2EOJHYtOXPtFL2QE9AMLsT4dCTt' -O humanDB.3.cf
-		mv humanDB.3.cf $ESCLAVOHOME/DB/.
 		echo "Done"
+		cd $actualpath
 	fi
 
 	ls ../$QCFOLDER/*_F_filt$PATTERN > r1
@@ -38,10 +38,11 @@ function humanDecont {
 	paste r1 r2 > r1r2 && rm -f r1 r2
 
 	#### status step file
+	nfiles=$(ls -1 $FASTQFOLDER/*${PATTERN} |wc -l |awk '{print $1}')
 	echo "timeElapsed" > tmp0
 	echo $nfiles |awk '{for(i=1;i<=$1;i++)print "0:0:0"}' >> tmp0
 	echo "inputFiles" > tmp1
-	ls -1 $FASTQFOLDER/*${PATTERN} >> tmp1
+	ls -1 ../$QCFOLDER/*${PATTERN} >> tmp1
 	echo "stepStatus" > tmp2
 	echo $nfiles |awk '{for(i=1;i<=$1;i++)print "running"}' >> tmp2
 	paste tmp0 tmp1 tmp2 > decont.conf && rm tmp0 tmp1 tmp2
@@ -130,6 +131,21 @@ function humanDecont {
 	
 	Rscript --vanilla dada2_centrigugeDecont.R > dada2_centrigugeDecont.log
 	duration=$SECONDS
+	echo "timeElapsed" > tmp0
+	echo $duration | awk -v nfiles=$nfiles -v duration=$duration '{for(i=1;i<=nfiles;i++){print int($1/60/60/nfiles)":"int($1/60/nfiles)":"($1%60)/nfiles}}' >> tmp0
+	echo "inputFiles" > tmp1
+	ls -1 ../$QCFOLDER/*${PATTERN} >> tmp1
+	echo "stepStatus" > tmp2
+	echo $nfiles |awk '{for(i=1;i<=$1;i++)print "done"}' >> tmp2
+	paste tmp0 tmp1 tmp2 > decont.conf && rm tmp0 tmp1 tmp2
+	rm dada2_centrigugeDecont.R
+
+	if [ "$PCONF" != "" ]; then
+		echo "ESCLAVO: Updating config file: $PCONF"
+		sed -i "s/running/done/g" decont.conf
+		sed -i "s/pPercent.*/pPercent\t60/g" $PCONF
+		sed -i "s/lastStep.*/lastStep\tQC/g" $PCONF
+	fi
 
 	echo "ESCLAVO: humanDecont end"
 }

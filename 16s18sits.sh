@@ -71,9 +71,7 @@ case $key in
     ;;
 esac
 done
-if [ "$TOLERANCE" == "" ];then
-	TOLERANCE=0.1
-fi
+
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [[ -n $1 ]]; then

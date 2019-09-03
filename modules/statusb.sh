@@ -54,7 +54,7 @@ function statusb {
 		sed -i "s/running/done/g" rbqc.conf
 		if [ "$PCONF" != "" ]; then
 			echo "ESCLAVO: Updating config file: $PCONF"
-			sed -i "s/pPercent.*/pPercent\t25/g" $PCONF
+			sed -i "s/pPercent.*/pPercent\t20/g" $PCONF
 			sed -i "s/status.*/status\topen/g" $PCONF
 			sed -i "s/lastStep.*/lastStep\tRead status before QC/g" $PCONF
 		fi

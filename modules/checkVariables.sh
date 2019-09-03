@@ -5,6 +5,15 @@ if [ "$PROJECTFOLDER" == "" ];then
 	export PROJECTFOLDER="."
 fi
 
+if [ "$TOLERANCE" == "" ];then
+    TOLERANCE=0.1
+fi
+
+if [ $TOLERANCE -gt 1 ] || [ $TOLERANCE -lt 0 ];then
+    echo "TOLERANCE must be between 0 and 1"
+    exit
+fi
+
 if [ "$MODULE" == "" ] || [ "$MODULE" == "all" ] || [ "$MODULE" == "ALL" ]; then
 	MODULE="statusb qc humanDecont statusa assignTaxonomy report"
 fi

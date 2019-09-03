@@ -54,7 +54,7 @@ function statusa {
 
 		if [ "$PCONF" != "" ]; then
 			echo "ESCLAVO: Updating config file: $PCONF"
-			sed -i "s/pPercent.*/pPercent\t75/g" $PCONF
+			sed -i "s/pPercent.*/pPercent\t80/g" $PCONF
 			sed -i "s/lastStep.*/lastStep\tRead status after QC/g" $PCONF
 		fi
 	fi

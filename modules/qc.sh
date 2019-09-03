@@ -70,7 +70,7 @@ function qc {
 	if [ "$PCONF" != "" ]; then
 		echo "ESCLAVO: Updating config file: $PCONF"
 		sed -i "s/running/done/g" qc.conf
-		sed -i "s/pPercent.*/pPercent\t50/g" $PCONF
+		sed -i "s/pPercent.*/pPercent\t40/g" $PCONF
 		sed -i "s/lastStep.*/lastStep\tQC/g" $PCONF
 	fi
 
