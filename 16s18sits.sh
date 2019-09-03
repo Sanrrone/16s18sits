@@ -18,19 +18,23 @@ source $ESCLAVOHOME/modules/checkVariables.sh
 if [ "$1" == "" ];then
     printHelp
 fi
-
+actualfolder=$(pwd)
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
 key="$1"
 case $key in
     -p|--projectfolder)
-    PROJECTFOLDER=$(echo "$2" |awk '{if(substr($0,length($0),1)=="/"){print substr($0,1,length($0)-1)}else{print $0}}')
+    cd $2
+    PROJECTFOLDER=$(pwd)
+    cd $actualfolder
     shift # past argument
     shift # past value
     ;;
     -f|--fastqfolder)
-    FASTQFOLDER=$(echo "$2" |awk '{if(substr($0,length($0),1)=="/"){print substr($0,1,length($0)-1)}else{print $0}}')
+    cd $2
+    FASTQFOLDER=$(pwd)
+    cd $actualfolder
     shift # past argument
     shift # past value
     ;;
@@ -49,7 +53,7 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    --force)
+    -F|-force|--force)
     FORCE=true
     shift # past argument
     ;;
