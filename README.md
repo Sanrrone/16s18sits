@@ -5,8 +5,12 @@ Welcome to 16s18sits (and you are welcome to suggest a better name :D ), 16S  pi
 Actually the pipeline always use all your cores (depending the step) and only support 16S and we are working to include 18S and ITS, sorry about that.
 
 # Output
-
+---------------------------------
+	
+    soon
+    
 # Usage
+---------------------------------
 
 The pipeline have a **basic** usage (only with three parameters):
 `bash 16s18sits.sh -p [project folder] -f [fastq foder] -pt [fastq pattern]`
