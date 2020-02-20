@@ -24,7 +24,7 @@ options available:
 
 * -p: Project folder, if no exist, the Pipeline will assume is the actual folder.
 * -f: fastq folder, mandatory parameter.
-* -pt: fastq pattern, it could be '.fastq' or '.fastq.gz'.
+* -fp: fastq pattern, it could be '.fastq' or '.fastq.gz'.
 * -to: read Tolerance for errors (default 0.1 in a range of 0 to 1). It means you tolerate a maximum of 10% of errors in your reads (QC < 20)
 * -force: overwrite existing pipeline runs.
 * -module: **[experimental]** choose which step do you want to run, choose between: statusb qc humanDecont statusa assignTaxonomy report (default: all)
