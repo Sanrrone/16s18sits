@@ -41,8 +41,8 @@ function qc {
 	fnRs <- sort(list.files(path, pattern=paste0('2',fqpattern), full.names = TRUE))
 	sample.names <- sapply(strsplit(basename(fnFs), '_'), \`[\`, 1)
 	# Place filtered files in filtered/ subdirectory
-	filtFs <- file.path(projectfolder, '1-qc', paste0(sample.names, '_F_filt',fqpattern))
-	filtRs <- file.path(projectfolder, '1-qc', paste0(sample.names, '_R_filt',fqpattern))
+	filtFs <- file.path(projectfolder, '1-qc', paste0(sample.names, '_F_filt','$PATTERN'))
+	filtRs <- file.path(projectfolder, '1-qc', paste0(sample.names, '_R_filt','$PATTERN'))
 	names(filtFs) <- sample.names
 	names(filtRs) <- sample.names
 	readtolerance<-readlength*tolerance
