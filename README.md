@@ -7,14 +7,14 @@ Actually the pipeline always use all your cores (depending the step) and only su
 # Output
 ---------------------------------
 	
-    soon
+    soon (but are the tables with species and their abundances)
     
 # Usage
 ---------------------------------
 
 The pipeline have a **basic** usage (only with three parameters):
 `bash 16s18sits.sh -p [project folder] -f [fastq foder] -pt [fastq pattern]`
-`example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz`
+`example: bash 16s18sits.sh -p mynewproject -f 0-raw -fp .fastq.gz`
 
 and the **complete** usage:
 `bash 16s18sits.sh -p [project folder] -f [fastq foder] -fp [fastq pattern] -to [tolerance] - -module [steps to run] -force`
