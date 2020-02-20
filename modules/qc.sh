@@ -32,7 +32,7 @@ function qc {
 	options(scipen=999)
 	
 	path<-'$FASTQFOLDER'
-	fqpattern<-'$PATTERN'
+        fqpattern<-'$(echo "$PATTERN" |sed 's/\./\\\\./g')' #double \\ to escape .
 	tolerance<-$TOLERANCE
 	readlength<-$lengthSeq
 	projectfolder<-'$PROJECTFOLDER'
