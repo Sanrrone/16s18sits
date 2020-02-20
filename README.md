@@ -17,8 +17,8 @@ The pipeline have a **basic** usage (only with three parameters):
 `example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz`
 
 and the **complete** usage:
-`bash 16s18sits.sh -p [project folder] -f [fastq foder] -pt [fastq pattern] -to [tolerance] - -module [steps to run] -force`
-`example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz -to 0.1 -module all -force`
+`bash 16s18sits.sh -p [project folder] -f [fastq foder] -fp [fastq pattern] -to [tolerance] - -module [steps to run] -force`
+`example: bash 16s18sits.sh -p mynewproject -f 0-raw -fp .fastq.gz -to 0.1 -module all -force`
 
 options available:
 
