@@ -27,7 +27,6 @@ options available:
 * -fp: fastq pattern, it could be '.fastq' or '.fastq.gz'.
 * -to: read Tolerance for errors (default 0.1 in a range of 0 to 1). It means you tolerate a maximum of 10% of errors in your reads (QC < 20)
 * -force: overwrite existing pipeline runs.
-* -module: **[experimental]** choose which step do you want to run, choose between: statusb qc humanDecont statusa assignTaxonomy report (default: all)
 * -h: print this help.
 * --debug: show all code step while the pipeline runs
 
