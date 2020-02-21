@@ -15,7 +15,7 @@ Actually the pipeline always use all your cores (depending the step) and only su
 	* rmarkdown
 	* knitr
 	* Kable
-* (optional) Centrifuge
+* (optional) Centrifuge == v1.0.4(beta)
 
 # Output
 ---------------------------------
