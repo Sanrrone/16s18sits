@@ -2,9 +2,9 @@
 set -e
 shopt -s direxpand
 shopt -s expand_aliases
-if [ -f ~/.bash_profile ]; then source ~/.bash_profile; fi
-if [ -f ~/.bashrc ]; then source ~/.bashrc; fi
-if [ -f ~/.bash_alias ]; then source ~/.bash_alias; fi
+#if [ -f ~/.bash_profile ]; then source ~/.bash_profile; fi
+#if [ -f ~/.bashrc ]; then source ~/.bashrc; fi
+#if [ -f ~/.bash_alias ]; then source ~/.bash_alias; fi
 
 export ESCLAVOHOME=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 source $ESCLAVOHOME/modules/checkVariables.sh
