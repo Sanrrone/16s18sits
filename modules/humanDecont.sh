@@ -131,7 +131,7 @@ function humanDecont {
 	" > dada2_centrigugeDecont.R
 
 	echo "ESCLAVO: humanDecont end"
-	echo "ESCLAVO: continuing dada2 qc last step"
+	echo "ESCLAVO: continuing dada2 mapp preprocess"
 	Rscript --vanilla dada2_centrigugeDecont.R > dada2_centrigugeDecont.log
 	duration=$SECONDS
 	echo "timeElapsed" > tmp0
@@ -150,5 +150,4 @@ function humanDecont {
 		sed -i "s/lastStep.*/lastStep\tQC/g" $PCONF
 	fi
 
-	echo "ESCLAVO: humanDecont end"
 }
