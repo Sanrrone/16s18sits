@@ -23,10 +23,12 @@ function humanDecont {
 	if [ ! -f "$ESCLAVOHOME/DB/humanDB.1.cf" ];then
 		actualpath=$(pwd)
 		cd $ESCLAVOHOME/DB
+		#humanDB was created using centrifuge v1.0.4(beta)
 		echo "No humanDB found, donwloading..."
-		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1QZUKHj040nFSU69ojBTU2uOhb2MYNIOa' -O humanDB.1.cf
-		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1fA-0CyIULPSWKryru0q14bqyWr7z1MnE' -O humanDB.2.cf
-		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1OksPc2EOJHYtOXPtFL2QE9AMLsT4dCTt' -O humanDB.3.cf
+		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=11pvlewFGBJXpFvL6tvmZACkf-g3d8nhW' -O humanDB.1.cf
+		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1AZHcGrWqRTFl48X4H20PvaB7bw-Z0sKT' -O humanDB.2.cf
+		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1nVT1Q7KYd-9gFfjHj_6a0qwN1XwBsthW' -O humanDB.3.cf
+		wget --no-check-certificate -r 'https://docs.google.com/uc?export=download&id=1rNJw9hiXDCamoGIG3PWi2tYvFn9VZgrz' -O humanDB.4.cf
 		echo "Done"
 		cd $actualpath
 	fi
