@@ -4,8 +4,7 @@ function humanDecont {
 
 	QCFOLDER=$1
 
-	centrifugeBIN=$(which centrifuge)
-	if [ "$centrifugeBIN" == "" ];then
+	if [ "$(which centrifuge)" == "" ];then
 		echo "ESCLAVO: no centrifuge installed, aborting this step"
 		exit
 	fi
