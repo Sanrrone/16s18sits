@@ -129,7 +129,8 @@ function humanDecont {
 	save(seqtab.nochim,file = 'seqtab.nochim.RData')
 	" > dada2_centrigugeDecont.R
 
-	
+	echo "ESCLAVO: humanDecont end"
+	echo "ESCLAVO: continuing dada2 qc last step"
 	Rscript --vanilla dada2_centrigugeDecont.R > dada2_centrigugeDecont.log
 	duration=$SECONDS
 	echo "timeElapsed" > tmp0
