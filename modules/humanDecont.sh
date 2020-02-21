@@ -81,9 +81,10 @@ function humanDecont {
 	sample.names <- sapply(strsplit(basename(filtFs), '_decont'), \`[\`, 1)
 	names(filtFs) <- sample.names
 	names(filtRs) <- sample.names
+	
 	print('learning from errors')
-	errF <- learnErrors(filtFs, multithread=TRUE)
-	errR <- learnErrors(filtRs, multithread=TRUE)
+	errF <- learnErrors(filtFs, multithread=TRUE, nbases=5000000)
+	errR <- learnErrors(filtRs, multithread=TRUE, nbases=5000000)
 	print('Done')
 	write.table(errF,'dada2_filt_errF.tsv',sep='\t')
 	write.table(errR,'dada2_filt_errR.tsv',sep='\t') 
