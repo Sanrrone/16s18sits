@@ -11,6 +11,7 @@ Actually the pipeline always use all your cores (depending the step) and only su
 * R with the following libraries:
 	* dada2
 	* phyloseq
+	* dplyr
 	* rmarkdown
 	* knitr
 	* Kable
