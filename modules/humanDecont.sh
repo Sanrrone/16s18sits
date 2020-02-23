@@ -67,6 +67,8 @@ function humanDecont {
 
 	done
 	
+	export PATTERN=".fastq.gz"
+	
 	echo "rm(list=ls())
 	if('BiocManager' %in% rownames(installed.packages()) == FALSE) {install.packages('BiocManager')}
 	if('dplyr' %in% rownames(installed.packages()) == FALSE) {install.packages('dplyr')}
