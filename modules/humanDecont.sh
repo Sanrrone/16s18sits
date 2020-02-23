@@ -85,8 +85,8 @@ function humanDecont {
 	names(filtRs) <- sample.names
 	
 	print('learning from errors')
-	errF <- learnErrors(filtFs, multithread=TRUE, nbases=length(filtFs)*500000, randomize = TRUE)
-	errR <- learnErrors(filtRs, multithread=TRUE, nbases=length(filtRs)*500000, randomize = TRUE)
+	errF <- learnErrors(filtFs, multithread=TRUE, nbases=length(filtFs)*50000, randomize = TRUE)
+	errR <- learnErrors(filtRs, multithread=TRUE, nbases=length(filtRs)*50000, randomize = TRUE)
 	print('Done')
 	write.table(errF,'dada2_filt_errF.tsv',sep='\t')
 	write.table(errR,'dada2_filt_errR.tsv',sep='\t') 
