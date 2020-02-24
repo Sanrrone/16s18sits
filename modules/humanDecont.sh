@@ -141,7 +141,7 @@ function humanDecont {
 
 	echo "ESCLAVO: humanDecont end"
 	echo "ESCLAVO: continuing dada2 mapp preprocess"
-	Rscript --vanilla dada2_centrigugeDecont.R > dada2_centrigugeDecont.log
+	Rscript --vanilla dada2_centrigugeDecont.R
 	duration=$SECONDS
 	echo "timeElapsed" > tmp0
 	echo $duration | awk -v nfiles=$nfiles -v duration=$duration '{for(i=1;i<=nfiles;i++){print int($1/60/60/nfiles)":"int($1/60/nfiles)":"($1%60)/nfiles}}' >> tmp0
