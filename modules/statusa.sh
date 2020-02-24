@@ -26,7 +26,7 @@ function statusa {
 		rm -rf multiqc_data*
 
 		echo -e "inputFiles\tsize\tstepStatus" > tmp0
-		ls -lh *${PATTERN} |awk '{print $NF"\t"$5"\trunning"}' >> tmp1
+		ls -lh *decont*${PATTERN} |awk '{print $NF"\t"$5"\trunning"}' >> tmp1
 		cat tmp0 tmp1 >> raqc.conf && rm -f tmp0 tmp1
 
 		echo "timeElapsed" > tmp2
@@ -35,7 +35,7 @@ function statusa {
 		paste raqc.conf tmp2 > tmp && rm raqc.conf tmp2 && mv tmp raqc.conf
 
 		echo "timeElapsed" > tmp2
-		for fastqfile in $(ls *${PATTERN})
+		for fastqfile in $(ls *decont*${PATTERN})
 		do
 			SECONDS=0
 			fastqc -f fastq $fastqfile -o . -t $(nproc)
