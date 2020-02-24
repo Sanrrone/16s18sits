@@ -58,6 +58,10 @@ function humanDecont {
 		readsf2=$(echo $line | awk '{print $2}')
 		centrifuge -x $ESCLAVOHOME/DB/humanDB -1 $readsf1 -2 $readsf2 --al-conc ${samplename}_cont --un-conc ${samplename}_decont -p $(nproc) > ${samplename}_centrifuge_report_query.tsv
 		mv centrifuge_report.tsv ${samplename}_centrifuge_report_reference.tsv
+		## subsampling for learnErrors
+		head -n 400000 ${samplename}_decont.1 > ${samplename}_subR1.fastq
+		head -n 400000 ${samplename}_decont.2 > ${samplename}_subR2.fastq
+		##compressing
 		gzip ${samplename}_cont.[12]
 		gzip ${samplename}_decont.[12]
 		mv ${samplename}_cont.1.gz ${samplename}_cont.1.fastq.gz
@@ -80,13 +84,16 @@ function humanDecont {
 	print('reading fastqs')
 	filtFs <- sort(list.files('.', pattern='_decont.1.fastq.gz', full.names = TRUE))
 	filtRs <- sort(list.files('.', pattern='_decont.2.fastq.gz', full.names = TRUE))
+	subfiltFs<- sort(list.files('.', pattern='_subR1.fastq', full.names = TRUE))
+	subfiltRs<- sort(list.files('.', pattern='_subR2.fastq', full.names = TRUE))
+
 	sample.names <- sapply(strsplit(basename(filtFs), '_decont'), \`[\`, 1)
 	names(filtFs) <- sample.names
 	names(filtRs) <- sample.names
 	
-	print('learning from errors')
-	errF <- learnErrors(filtFs, multithread=TRUE, nbases=length(filtFs)*50000, randomize = TRUE)
-	errR <- learnErrors(filtRs, multithread=TRUE, nbases=length(filtRs)*50000, randomize = TRUE)
+	print('learning from errors (subsampled at 400000 reads)')
+	errF <- learnErrors(subfiltFs, multithread=TRUE, randomize = TRUE)
+	errR <- learnErrors(subfiltRs, multithread=TRUE, randomize = TRUE)
 	print('Done')
 	write.table(errF,'dada2_filt_errF.tsv',sep='\t')
 	write.table(errR,'dada2_filt_errR.tsv',sep='\t') 
