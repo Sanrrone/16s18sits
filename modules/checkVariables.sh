@@ -14,6 +14,10 @@ if [ $TOLERANCE -gt 1 ] || [ $TOLERANCE -lt 0 ];then
     exit
 fi
 
+if [ $READS4LEARN == '' ];then
+	$READS4LEARN=400000
+fi
+
 if [ "$MODULE" == "" ] || [ "$MODULE" == "all" ] || [ "$MODULE" == "ALL" ]; then
 	MODULE="statusb qc humanDecont statusa assignTaxonomy report"
 fi
