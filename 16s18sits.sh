@@ -53,6 +53,11 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -ler|--learnErrorReads)
+    READS4LEARN="$2"
+    shift # past argument
+    shift # past value
+    ;;   
     -F|-force|--force)
     FORCE=true
     shift # past argument
