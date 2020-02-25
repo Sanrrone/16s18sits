@@ -114,7 +114,7 @@ do
 	   ;;
 	   "humanDecont")
 		  source $ESCLAVOHOME/modules/humanDecont.sh
-		  humanDecont 1-qc
+		  humanDecont 1-qc $READS4LEARN
 	   ;;
 	   "qc")
 		  source $ESCLAVOHOME/modules/qc.sh
