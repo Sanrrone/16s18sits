@@ -60,8 +60,8 @@ function humanDecont {
 		centrifuge -x $ESCLAVOHOME/DB/humanDB -1 $readsf1 -2 $readsf2 --al-conc ${samplename}_cont --un-conc ${samplename}_decont -p $(nproc) > ${samplename}_centrifuge_report_query.tsv
 		mv centrifuge_report.tsv ${samplename}_centrifuge_report_reference.tsv
 		## subsampling for learnErrors
-		head -n $READS4LEARN ${samplename}_decont.1 > ${samplename}_subR1.fastq
-		head -n $READS4LEARN ${samplename}_decont.2 > ${samplename}_subR2.fastq
+		head -n $(echo $nfiles |awk -v read4learn=$READS4LEARN '{print int(read4learn/$1/2)}') ${samplename}_decont.1 > ${samplename}_subR1.fastq
+		head -n $(echo $nfiles |awk -v read4learn=$READS4LEARN '{print int(read4learn/$1/2)}') ${samplename}_decont.2 > ${samplename}_subR2.fastq
 		##compressing
 		gzip ${samplename}_cont.[12]
 		gzip ${samplename}_decont.[12]
