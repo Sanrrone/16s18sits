@@ -39,7 +39,7 @@ options available:
 * -f: fastq folder, mandatory parameter.
 * -fp: fastq pattern, it could be '.fastq' or '.fastq.gz'.
 * -to: read Tolerance for errors (default 0.1 in a range of 0 to 1). It means you tolerate a maximum of 10% of errors in your reads (QC < 20).
-* -ler: numnber of reads for learnError dada2 function (400000 by default).
+* -ler: numnber of reads for learnError dada2 function (50000 by default).
 * -force: overwrite existing pipeline runs.
 * -h: print this help.
 * --debug: show all code step while the pipeline runs.
