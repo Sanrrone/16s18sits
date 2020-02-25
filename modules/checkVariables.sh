@@ -15,7 +15,7 @@ if [ $TOLERANCE -gt 1 ] || [ $TOLERANCE -lt 0 ];then
 fi
 
 if [ $READS4LEARN == '' ];then
-	$READS4LEARN=400000
+	$READS4LEARN=50000
 fi
 
 if [ "$MODULE" == "" ] || [ "$MODULE" == "all" ] || [ "$MODULE" == "ALL" ]; then
