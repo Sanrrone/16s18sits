@@ -38,7 +38,9 @@ function qc {
 	projectfolder<-'$PROJECTFOLDER'
 
 	fnFs <- sort(list.files(path, pattern=paste0('1',fqpattern), full.names = TRUE))
+	fnFs <- !grepl(x=fnFs, pattern = '[\\.|\\_]R2[\\.|\\_]', ignore.case = T)
 	fnRs <- sort(list.files(path, pattern=paste0('2',fqpattern), full.names = TRUE))
+	fnRs <- !grepl(x=fnRs, pattern = '[\\.|\\_]R1[\\.|\\_]', ignore.case = T)
 	sample.names <- sapply(strsplit(basename(fnFs), '_'), \`[\`, 1)
 	# Place filtered files in filtered/ subdirectory
 	filtFs <- file.path(projectfolder, '1-qc', paste0(sample.names, '_F_filt','$PATTERN'))
