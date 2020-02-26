@@ -37,9 +37,9 @@ function qc {
 	readlength<-$lengthSeq
 	projectfolder<-'$PROJECTFOLDER'
 
-	fnFs <- sort(list.files(path, pattern=paste0('R?1[\\.|\\_]?.*',fqpattern), full.names = TRUE))
+	fnFs <- sort(list.files(path, pattern=paste0('R?1[\\\\.|\\\\_]?.*',fqpattern), full.names = TRUE))
 	fnFs <- !grepl(x=fnFs, pattern = '[\\\\.|\\\\_]R2[\\\\.|\\\\_]', ignore.case = T)
-	fnRs <- sort(list.files(path, pattern=paste0('R?2[\\.|\\_]?.*',fqpattern), full.names = TRUE))
+	fnRs <- sort(list.files(path, pattern=paste0('R?2[\\\\.|\\\\_]?.*',fqpattern), full.names = TRUE))
 	fnRs <- !grepl(x=fnRs, pattern = '[\\\\.|\\\\_]R1[\\\\.|\\\\_]', ignore.case = T)
 	sample.names <- sapply(strsplit(basename(fnFs), '_'), \`[\`, 1)
 	# Place filtered files in filtered/ subdirectory
