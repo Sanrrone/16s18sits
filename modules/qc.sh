@@ -49,16 +49,15 @@ function qc {
 	names(filtRs) <- sample.names
 	readtolerance<-readlength*tolerance
 	maxeeformula<- (0.01*readlength)+(0.012589254*readtolerance)
-	print(paste0('Doing filtering at maxEE ',maxeeformula))
+	print(paste0('ESCLAVO: Doing filtering at maxEE ',maxeeformula))
 	out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=(readlength-readlength*tolerance),
 	              maxN=0, maxEE=maxeeformula, truncQ=2, rm.phix=TRUE, minLen = 80,
 	              compress=TRUE, multithread=TRUE)
-	print('Done')
 	write.table(out,'qc_filt.tsv',sep='\t')
 
 	" > dada2_filt.R
 	SECONDS=0
-	Rscript --vanilla dada2_filt.R > dada2_filt.log
+	Rscript --vanilla dada2_filt.R
 	duration=$SECONDS
 	echo "timeElapsed" > tmp0
 	echo $duration | awk -v nfiles=$nfiles -v duration=$duration '{for(i=1;i<=nfiles;i++){print int($1/60/60/nfiles)":"int($1/60/nfiles)":"($1%60)/nfiles}}' >> tmp0
