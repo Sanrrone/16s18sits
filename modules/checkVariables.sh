@@ -9,7 +9,7 @@ if [ "$TOLERANCE" == "" ];then
     TOLERANCE=0.1
 fi
 
-if [ $TOLERANCE -gt 1 ] || [ $TOLERANCE -lt 0 ];then
+if [ "$(echo $TOLERANCE | awk '{if($1>1 || $1<0)print "fail"}')" == "fail"  ];then
     echo "TOLERANCE must be between 0 and 1"
     exit
 fi
