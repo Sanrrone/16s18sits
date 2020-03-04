@@ -20,8 +20,11 @@ Actually the pipeline always use all your cores (depending the step) and only su
 # Output
 ---------------------------------
 	
-    soon (but are the tables with species and their abundances)
-    
+The pipeline will create 3 folders (one per module step):
+* **1-qc**: the folder contains the reads that passes the QC filters according to dada2 QC functions. and the file qc_filt.tsv that is a summary for raw and filtered reads.
+* **2-decont**: the folder contains the reads that passes the Decontamination (human) step, it keeps the reads that mapped again human genome and the no mapped (decontaminated) reads. Additionally it have multiQC report for decontaminated reads in `multiqc_report.html`
+* **3-taxInsight**: the last folder of the pipeline where you can find the final report for mapped reads against silvaDF through dada2 steps. The file you are looking for is `abundance.tsv` where contains the abundance for each organism mapped by your reads. Also it contains a PDF image with your sample and organism found.
+
 # Usage
 ---------------------------------
 
