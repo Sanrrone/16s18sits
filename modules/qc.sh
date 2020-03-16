@@ -49,6 +49,7 @@ function qc {
 	names(filtRs) <- sample.names
 	readtolerance<-readlength*tolerance
 	maxeeformula<- (0.01*readlength)+(0.012589254*readtolerance)
+        print(paste('ESCLAVO: working on ',fnFs,' ',fnRs))
 	print(paste0('ESCLAVO: Doing filtering at maxEE ',maxeeformula))
 	out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=(readlength-readlength*tolerance),
 	              maxN=0, maxEE=maxeeformula, truncQ=2, rm.phix=TRUE, minLen = 80,
