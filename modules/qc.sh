@@ -53,7 +53,7 @@ function qc {
 	print(paste0('ESCLAVO: Doing filtering at maxEE ',maxeeformula))
 	out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=(readlength-readlength*tolerance),
 	              maxN=0, maxEE=maxeeformula, truncQ=2, rm.phix=TRUE, minLen = 80,
-	              compress=TRUE, multithread=TRUE, verbose=TRUE)
+	              compress=TRUE, multithread=TRUE, matchIDs=TRUE, verbose=TRUE)
 	write.table(out,'qc_filt.tsv',sep='\t')
 
 	" > dada2_filt.R
