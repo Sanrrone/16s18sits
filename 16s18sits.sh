@@ -53,11 +53,10 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    -ler|--learnErrorReads)
-    READS4LEARN="$2"
-    shift # past argument
-    shift # past value
-    ;;   
+    -se|--single|-single)
+    PAIRED="FALSE"
+    shift
+    ;;
     -F|-force|--force)
     FORCE=true
     shift # past argument
@@ -86,7 +85,6 @@ fi
 
 checkVariables
 
-
 cd $PROJECTFOLDER
 export PNAME=$(pwd | awk -F"/" '{print $NF"_eConf.tsv"}')
 export PCONF=$(pwd | awk -v pname=$PNAME '{print $0"/"pname}')
@@ -114,7 +112,7 @@ do
 	   ;;
 	   "humanDecont")
 		  source $ESCLAVOHOME/modules/humanDecont.sh
-		  humanDecont 1-qc $READS4LEARN
+		  humanDecont 1-qc
 	   ;;
 	   "qc")
 		  source $ESCLAVOHOME/modules/qc.sh
@@ -153,4 +151,4 @@ echo "ESCLAVO: Pipeline done :)"
 #		  Y_ Y_. "vr"~  T			  Y_ Y_. "vr"~  T			  Y_ Y_. "vr"~  T			  Y_ Y_. "vr"~  T    
 #		  (  (    |L    j			  (  (    |L    j			  (  (    |L    j			  (  (    |L    j    
 #		  [nn[nn..][nn..]			  [nn[nn..][nn..]			  [nn[nn..][nn..]			  [nn[nn..][nn..]    
-#	   ~~~~~~~~~~~~~~~~~~~~~~~	    ~~~~~~~~~~~~~~~~~~~~~~~	    ~~~~~~~~~~~~~~~~~~~~~~~	    ~~~~~~~~~~~~~~~~~~~~~~~   
+#	   ~~~~~~~~~~~~~~~~~~~~~~~	    ~~~~~~~~~~~~~~~~~~~~~~~	    ~~~~~~~~~~~~~~~~~~~~~~~	    ~~~~~~~~~~~~~~~~~~~~~~

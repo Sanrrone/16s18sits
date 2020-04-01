@@ -1,11 +1,10 @@
-function assignTaxonomy {
+ function assignTaxonomy {
 	##### to make new silva db for dada2 (instead of decipher)
     #path <- "~/Desktop/Silva/Silva.nr_v132"
     #dada2:::makeTaxonomyFasta_Silva(file.path(path, "silva.nr_v132.align"), file.path(path, "silva.nr_v132.tax"), "~/tax/silva_nr_v132_train_set.fa.gz")
     #dada2:::makeSpeciesFasta_Silva("~/Desktop/Silva/SILVA_132_SSURef_tax_silva.fasta.gz", "~/tax/silva_species_assignment_v132.fa.gz")
-	
-	if [ "$1" == "" ];then
-		WORKFOLDER="3-taxInsight"
+    if [ "$1" == "" ];then
+	WORKFOLDER="3-taxInsight"
 	else
     	WORKFOLDER=$1
     fi
@@ -16,28 +15,15 @@ function assignTaxonomy {
 
     cd $WORKFOLDER
 
-    	if [ "$PAIRED" == "TRUE" ];then
-		ls -1 $PROJECTFOLDER/2-decont/*_decont.1.fastq.gz > r1
-		ls -1 $PROJECTFOLDER/2-decont/*_decont.2.fastq.gz > r2
-
-		paste r1 r2 > r1r2 && rm -f r1 r2
-	else
-		ls -1 $PROJECTFOLDER/2-decont/*_decont.fastq.gz > r1r2
-	fi
-	
-	#### status step file
-	nfiles=$(wc -l r1r2 |awk '{print $1}')
+    nfiles=$(ls -1 $FASTQFOLDER/*${PATTERN} |wc -l |awk '{print $1}')
 	echo "timeElapsed" > tmp0
 	echo $nfiles |awk '{for(i=1;i<=$1;i++)print "0:0:0"}' >> tmp0
 	echo "inputFiles" > tmp1
-	if [ "$PAIRED" == "TRUE" ];then
-		ls -1 $PROJECTFOLDER/2-decont/*_decont.[12].fastq.gz >> tmp1
-	else
-		ls -1 $PROJECTFOLDER/2-decont/*_decont.fastq.gz >> tmp1
-	fi
+	ls -1 ../1-qc/*${PATTERN} >> tmp1
 	echo "stepStatus" > tmp2
 	echo $nfiles |awk '{for(i=1;i<=$1;i++)print "running"}' >> tmp2
 	paste tmp0 tmp1 tmp2 > tc.conf && rm tmp0 tmp1 tmp2
+
 
 	echo "ESCLAVO: assignTaxonomy begin"
 	echo "
@@ -46,7 +32,6 @@ function assignTaxonomy {
 	if('phyloseq' %in% rownames(installed.packages()) == FALSE) {BiocManager::install('phyloseq')}
 	if('Biostrings' %in% rownames(installed.packages()) == FALSE) {BiocManager::install('Biostrings')}
 	if('ggplot2' %in% rownames(installed.packages()) == FALSE) {install.packages('ggplot2')}
-
 	library(dada2)
 	library(phyloseq)
 	library(Biostrings)
@@ -61,17 +46,14 @@ function assignTaxonomy {
 	#taxa.print <- taxa # Removing sequence rownames for display only
 	#rownames(taxa.print) <- NULL
 	#head(taxa.print)
-
 	abudancedf<-as.data.frame(t(seqtab.nochim))
 	abudancedf<-cbind(taxa,abudancedf[rownames(taxa),])
 	rownames(abudancedf)<-1:nrow(abudancedf)
 	
 	write.table(abudancedf,'abundance.tsv',row.names = F,sep = '\t')
-
 	ps <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), tax_table(taxa))
 	write.table(otu_table(ps),'otu_table.tsv',sep='\t')
 	write.table(tax_table(ps),'tax_table.tsv',sep='\t')
-
 	if(file.exists('$FASTQFOLDER/metadata.tsv')){
 	  metadata<-read.table('$FASTQFOLDER/metadata.tsv', sep='\t', header=T, stringsAsFactors = F)
 	  rownames(metadata)<-metadata\$sample
@@ -84,15 +66,11 @@ function assignTaxonomy {
 	}else{
 	  metadata<-data.frame()
 	}
-
-
 	top10 <- names(sort(taxa_sums(ps), decreasing=TRUE))[1:10]
 	ps.top10 <- transform_sample_counts(ps, function(OTU) OTU/sum(OTU))
 	ps.top10 <- prune_taxa(top10, ps.top10)
 	hformula=10
-
 	if(nrow(metadata)!=0 & 'treatment' %in% colnames(metadata) & 'sample' %in% colnames(metadata)){
-
 	  wformula=4 + length(sample_names(ps))*2.5 + length(unique(metadata$treatment))
 	  pdf('sampleTaxComposition.pdf', width=wformula, height=hformula)
 	  plot_bar(ps.top10, x='Sample', fill='Genus') + geom_bar(position='fill', stat='identity', color='black') + 
@@ -109,28 +87,10 @@ function assignTaxonomy {
 	    theme_minimal() + theme(axis.text.x = element_text(angle = 65, hjust = 1))
 	}
 	dev.off()
-
 	" > dada2_assign.R
 
 	SECONDS=0
 	Rscript --vanilla dada2_assign.R > dada2_assign.log
-	#cat r1r2 | while read line
-	#do
-	#	echo "ESCLAVO: runing assign tax for $line"
-	#	samplename=$(echo $line | awk '{print $1}' | awk -F"/" '{print $NF}' |awk -F"_decont" '{print $1}')
-	#	if [ "$PAIRED" == "TRUE" ];then
-	#		readsf1=$(echo $line | awk '{print $1}')
-	#		readsf2=$(echo $line | awk '{print $2}')
-	#		centrifuge -x $ESCLAVOHOME/DB/p+h+v -1 $readsf1 -2 $readsf2 -p $(nproc) > ${samplename}_centrifuge_report_query.tsv
-	#		mv centrifuge_report.tsv ${samplename}_centrifuge_report_reference.tsv
-	#	else
-    #                    readsf1=$(echo $line | awk '{print $1}')
-    #                    centrifuge -x $ESCLAVOHOME/DB/p+h+v -U $readsf1 -p $(nproc) > ${samplename}_centrifuge_report_query.tsv
-    #                    mv centrifuge_report.tsv ${samplename}_centrifuge_report_reference.tsv
-	#	fi
-	#done
-	
-	
 	duration=$SECONDS
 	
 	#rm dada2_assign.R
@@ -147,5 +107,4 @@ function assignTaxonomy {
 	fi
 
 	echo "ESCLAVO: assignTaxonomy end"
-	exit
 }

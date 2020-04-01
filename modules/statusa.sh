@@ -26,25 +26,28 @@ function statusa {
 		rm -rf multiqc_data*
 
 		echo -e "inputFiles\tsize\tstepStatus" > tmp0
-		ls -lh *decont*${PATTERN} |awk '{print $NF"\t"$5"\trunning"}' >> tmp1
+		ls -lh *${PATTERN} |awk '{print $NF"\t"$5"\trunning"}' >> tmp1
 		cat tmp0 tmp1 >> raqc.conf && rm -f tmp0 tmp1
 
 		echo "timeElapsed" > tmp2
-		nfiles=$(ls -1 $FASTQFOLDER/*${PATTERN} |wc -l |awk '{print $1}')
+		nfiles=$(ls -1 *decont*${PATTERN} |wc -l |awk '{print $1}')
 		echo $nfiles |awk '{for(i=1;i<=$1;i++)print "0:0:0"}' >> tmp2
 		paste raqc.conf tmp2 > tmp && rm raqc.conf tmp2 && mv tmp raqc.conf
+                cores=$(cat /proc/meminfo |grep "MemAvailable" |awk '{printf "%3.0f",$2/1024/250}' | awk -v ncpus="$(nproc)" '{if($1>ncpus){print ncpus-1}else{print $1}}')
 
 		echo "timeElapsed" > tmp2
 		for fastqfile in $(ls *decont*${PATTERN})
 		do
-			SECONDS=0
-			fastqc -f fastq $fastqfile -o . -t $(nproc)
+
+
+                        SECONDS=0
+                        fastqc -f fastq -o . -d .  -t $cores $fastqfile
 			duration=$SECONDS
 			echo "$(($duration/60/60)):$(($duration/60)):$(($duration % 60))" >> tmp2
 		done
 		rm raqc.conf
 		echo -e "inputFiles\tsize\tstepStatus" > tmp0
-		ls -lh *${PATTERN} |awk '{print $NF"\t"$5"\trunning"}' >> tmp1
+		ls -lh *decont*${PATTERN} |awk '{print $NF"\t"$5"\trunning"}' >> tmp1
 		cat tmp0 tmp1 > raqc.conf && rm -f tmp0 tmp1
 		ls -1 *.html | grep -v "multiqc_report.html" | awk 'BEGIN{print "qcFiles"}{print $1}' >> tmp3
 		paste raqc.conf tmp2 tmp3 > tmp && rm -f tmp2 raqc.conf tmp1 tmp3 && mv tmp raqc.conf

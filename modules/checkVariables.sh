@@ -14,22 +14,23 @@ if [ "$(echo $TOLERANCE | awk '{if($1>1 || $1<0)print "fail"}')" == "fail"  ];th
     exit
 fi
 
-if [ $READS4LEARN == '' ];then
-	$READS4LEARN=50000
+if [ "$MODULE" == "" ] || [ "$MODULE" == "all" ] || [ "$MODULE" == "ALL" ]; then
+	#MODULE="statusb qc humanDecont statusa assignTaxonomy report"
+	MODULE="statusb qc humanDecont statusa assignTaxonomy"
 fi
 
-if [ "$MODULE" == "" ] || [ "$MODULE" == "all" ] || [ "$MODULE" == "ALL" ]; then
-	MODULE="statusb qc humanDecont statusa assignTaxonomy report"
+if [ "$PAIRED" == "" ]; then
+	PAIRED="TRUE"
 fi
 
 }
 
 function printHelp {
-	echo "usage: bash 16s18sits.sh -p [project folder] -f [fastq foder] -pt [fastq pattern]"
-    echo "example: bash 16s18sits.sh -p mynewproject -f 0-raw -pt .fastq.gz"
+	echo "usage: bash 16s18sits.sh -p [project folder] -f [fastq foder] -fp [fastq pattern]"
+    echo "example: bash 16s18sits.sh -p mynewproject -f 0-raw -fp .fastq.gz"
     echo -e "\noptions available:\n"
     echo "-p Project folder, if no exist, the Pipeline will assume is the actual folder"
     echo "-f fastq folder, mandatory parameter"
-    echo "-pt fastq pattern, it could be '.fastq' or '.fastq.gz'"
+    echo "-fp fastq pattern, it could be '.fastq' or '.fastq.gz'"
     exit
 }

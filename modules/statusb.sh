@@ -36,10 +36,13 @@ function statusb {
 		paste tmp tmp2 > rbqc.conf && rm -f tmp2
 
 		echo "timeElapsed" > tmp2
+                cores=$(cat /proc/meminfo |grep "MemAvailable" |awk '{printf "%3.0f",$2/1024/250}' | awk -v ncpus="$(nproc)" '{if($1>ncpus){print ncpus-1}else{print $1}}')
+
 		for fastqfile in $(ls *$PATTERN)
 		do
+
 			SECONDS=0
-			fastqc -f fastq $fastqfile -o . -t $(nproc)
+			fastqc -f fastq -o . -d . -t $cores $fastqfile
 			duration=$SECONDS
 			echo "$(($duration/60/60)):$(($duration/60)):$(($duration % 60))" >> tmp2
 		done
